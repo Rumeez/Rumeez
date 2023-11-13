@@ -1,14 +1,14 @@
 export const handleButtonClick = () => {
     // display popup asking for phone number
-    const phoneNumber = prompt("Please enter your phone number:");
+    const user_email = prompt("Please enter your user email:");
   
     // check if the user entered a phone number
-    if (phoneNumber !== null && phoneNumber.trim() !== "") {
+    if (user_email !== null && user_email.trim() !== "") {
       // user provided a phone number
-      console.log(`Phone number entered: ${phoneNumber}`);
+      console.log(`User email entered: ${user_email}`);
       // Add further logic here (e.g., send the phone number to a server, send text to number to verify.)
     } else {
       // User canceled or entered an empty phone number
-      console.log("Phone number entry canceled or empty.");
+      console.log("User email entry cancelled or empty.");
     }
   };
