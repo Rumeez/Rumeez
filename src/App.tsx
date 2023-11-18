@@ -52,14 +52,14 @@ import { handleButtonClick } from './buttonLogic';
 import InputField from './InputField'; // Correct the path if needed
 
 
-function Login(setLogin_Status, setPassword_status) {
+function Login(setLogin_status, setPassword_status) {
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
   
     switch (name) {
       case 'username':
-        setLogin_Status(value);
+        setLogin_status(value);
           break; 
       case 'password':
         setPassword_status(value);
@@ -73,7 +73,6 @@ function Login(setLogin_Status, setPassword_status) {
 
   return(
     <div>
-    <h1>Tell us about yourself.</h1>
       <InputField label="Username: " name="username" value={temp} onChange={handleInputChange} placeholder="Enter your name" />
     </div>
   );
@@ -88,13 +87,13 @@ return(
 }
 
 
-function Home(setLogin_Status, setPassword_status) { //, accessLogin_status) {
+function Home({setLogin_status, setPassword_status}) { //, accessLogin_status) {
   return (
     <div>
      <h1>Rumeez</h1>
       <Createacc />
      <h2>Find your perfect roommate.</h2>
-      <Login setLogin_Status={setLogin_Status} setPassword_status={setPassword_status} />
+      <Login setLogin_status={setLogin_status} setPassword_status={setPassword_status} />
     <p><Link to="/userInfo">Go to User Info</Link></p>
     </div>
   );
@@ -109,8 +108,8 @@ function App() {
   //const [login_click, setLogin_click] = useState(false);
   
     //Mutator Functions
-  function changeLogin_status(value: string) { setLogin_status(value)};
-  function changePassword_status(value: string) { setPassword_status(value)};
+  function changeLogin_status(value: string): void { setLogin_status(value)};
+  function changePassword_status(value: string): void { setPassword_status(value)};
     //Accessor Function
   //function retLogin_Status():string { return login_status}
 
@@ -121,10 +120,10 @@ function App() {
         <Routes>
           <Route path="/" element={
               <Home 
-              setLogin_Status={changeLogin_status} 
-              setPassword_Status={changePassword_status} 
-              //accessLogin_status={retLogin_Status}
-              />} />
+              setLogin_status={changeLogin_status} :  
+              setPassword_status={changePassword_status} 
+  
+              } 
           <Route path="/userInfo" element={<UserInfo />} />
           {/* Other routes go here */}
         </Routes>
