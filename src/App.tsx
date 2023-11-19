@@ -103,15 +103,15 @@ const Home: React.FC<HomeProps> = ({setLogin_status, setPassword_status, accessL
   return (
     <div>
      <h1>Rumeez</h1>
-      <Createacc />
      <h2>Find your perfect roommate.</h2>
-      <Login 
-        setLogin_status={setLogin_status} 
-        setPassword_status={setPassword_status} 
-        accessLogin_string={accessLogin_string}
-        accessPassword_string={accessPassword_string}
-      />
-    <p><Link to="/userInfo">Go to User Info</Link></p>
+          <Login 
+            setLogin_status={setLogin_status} 
+            setPassword_status={setPassword_status} 
+            accessLogin_string={accessLogin_string}
+            accessPassword_string={accessPassword_string}
+          />
+        <> </>
+          <Createacc />
     </div>
   );
 }
