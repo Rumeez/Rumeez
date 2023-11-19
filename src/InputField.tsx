@@ -13,7 +13,7 @@ interface InputFieldProps {
 const InputField: React.FC<InputFieldProps> = ({ label, name, value, onChange, placeholder }) => {
   return (
     <div>
-      <label>{label}:</label>
+      <label>{label}</label>
       <input
         type="text"
         name={name}

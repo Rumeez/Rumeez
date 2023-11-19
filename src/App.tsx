@@ -51,8 +51,14 @@ import UserInfo from './userInfo'; // Adjust the import here
 import { handleButtonClick } from './buttonLogic';
 import InputField from './InputField'; // Correct the path if needed
 
+interface LoginProps {
+  setLogin_status: (value: string) => void
+  setPassword_status: (value: string) => void
+  accessLogin_string: () => string
+  accessPassword_string: () => string
+}
 
-function Login(setLogin_status, setPassword_status) {
+const Login: React.FC<LoginProps> = ({setLogin_status, setPassword_status, accessLogin_string, accessPassword_string}) => {
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -69,11 +75,10 @@ function Login(setLogin_status, setPassword_status) {
     }
   };
 
-  let temp = "param_req"
-
   return(
     <div>
-      <InputField label="Username: " name="username" value={temp} onChange={handleInputChange} placeholder="Enter your name" />
+      <InputField label="Username: " name="username" value={accessLogin_string()} onChange={handleInputChange} placeholder="Enter your username" />
+      <InputField label="Password: " name="password" value={accessPassword_string()} onChange={handleInputChange} placeholder="Enter your password" />
     </div>
   );
 }
@@ -86,20 +91,33 @@ return(
 );
 }
 
+  //Defining Home Props
+interface HomeProps {
+  setLogin_status: (value: string) => void
+  setPassword_status: (value: string) => void
+  accessLogin_string: () => string
+  accessPassword_string: () => string
+}
 
-function Home({setLogin_status, setPassword_status}) { //, accessLogin_status) {
+const Home: React.FC<HomeProps> = ({setLogin_status, setPassword_status, accessLogin_string, accessPassword_string}) => { //, accessLogin_status) {
   return (
     <div>
      <h1>Rumeez</h1>
       <Createacc />
      <h2>Find your perfect roommate.</h2>
-      <Login setLogin_status={setLogin_status} setPassword_status={setPassword_status} />
+      <Login 
+        setLogin_status={setLogin_status} 
+        setPassword_status={setPassword_status} 
+        accessLogin_string={accessLogin_string}
+        accessPassword_string={accessPassword_string}
+      />
     <p><Link to="/userInfo">Go to User Info</Link></p>
     </div>
   );
 }
 
-function App() {
+
+function App () {
     //Stores user's username
   const [login_status, setLogin_status] = useState('');
     //Stores user's password associated with account
@@ -111,7 +129,10 @@ function App() {
   function changeLogin_status(value: string): void { setLogin_status(value)};
   function changePassword_status(value: string): void { setPassword_status(value)};
     //Accessor Function
-  //function retLogin_Status():string { return login_status}
+  function retLogin_string():string { return login_status}
+  function retPassword_string():string { return password_status}
+
+
 
   return (
     <Router>
@@ -120,10 +141,11 @@ function App() {
         <Routes>
           <Route path="/" element={
               <Home 
-              setLogin_status={changeLogin_status} :  
-              setPassword_status={changePassword_status} 
-  
-              } 
+              setLogin_status={changeLogin_status}  
+              setPassword_status={changePassword_status}
+              accessLogin_string={retLogin_string}
+              accessPassword_string={retPassword_string}
+              /> } />
           <Route path="/userInfo" element={<UserInfo />} />
           {/* Other routes go here */}
         </Routes>
