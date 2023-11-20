@@ -1,5 +1,6 @@
 import React, { useState, ChangeEvent } from 'react';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function UserInfo() {
   const [name, setName] = useState('');
@@ -11,6 +12,7 @@ function UserInfo() {
   const [drink, setDrink] = useState('');
   const [rise, setRise] = useState('');
   const [sleep, setSleep] = useState('');
+  const navigate = useNavigate();
 
   // Event handler for dropdown changes
   const handleInputChange = (event: ChangeEvent<HTMLSelectElement>) => {
@@ -39,6 +41,10 @@ function UserInfo() {
       default:
         break;
     }
+  };
+
+  const handleGoBack = () => {
+    navigate('/createAccount');
   };
 
   return (
@@ -135,8 +141,9 @@ function UserInfo() {
       </select>
       {/* Your user information content goes here */}
       
+      <button onClick={handleGoBack}>Go Back</button>
       {/* Add a link to navigate back to the home page */}
-      <Link to="/">Go to Home</Link>
+      <button>Next</button>
     </div>
   );
 }

@@ -205,7 +205,7 @@ return (
             login_click={handleLoginClick}
           />
         } />
-       <Route path="/userInfo" element={<UserInfo />} />
+          <Route path="/userInfo" element={<UserInfo />} />
           <Route path="/createAccount" element={<CreateAccount />} />
         </Routes>
       </div>
