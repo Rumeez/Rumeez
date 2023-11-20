@@ -262,7 +262,8 @@ return (
             accessTrack_clicks={retTrack_clicks}
             /> } />
         <Route path="/userInfo" element={<UserInfo />} />
-          <Route path="/createAccount" element={<CreateAccount />} />
+        <Route path="/pages/User_Home_page" element={<User_Home_Page />}  />
+        <Route path="/createAccount" element={<CreateAccount />} />
           {/* Other routes go here */}
           </Routes>
       </div>
