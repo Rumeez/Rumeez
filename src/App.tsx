@@ -20,24 +20,6 @@ import { User_Home_Page } from './pages/User_Home_page';
   //  *NOTE: Will handle fetching data from backend to verify 
   //         entered user credentials. 
 
-/* FIX Required: Figure Out How to define this outside of App Parent
-                  component*/
-
-//*/
-
-/*function login_button_valid() {
-  return (
-    <Link to="/pages/User_Home_Page"> 
-          <button> </button>
-    </Link>
-
-    interface LoginClickProps {
-  onClick: () => void;
-  children: React.ReactNode; // Include children prop
-}
-
-  );
-}*/
 
 interface LoginValidProps {
   event_login_click: () => void
@@ -45,7 +27,7 @@ interface LoginValidProps {
 
 const LoginIsValid: React.FC<LoginValidProps> = ({event_login_click}) => {
   return (
-    <Link to="page/User_Home_page"> 
+    <Link to="pages/User_Home_page"> 
         <button onClick={event_login_click}> Login</button>
     </Link>
   ); 
@@ -117,7 +99,8 @@ const Login: React.FC<AppProps> = (
     return true; // Placeholder, replace with actual validation logic
   };
 
-      //Return for Login Button
+  //Return for Login Button
+      //Display login User_Home_Page when valid login
   if(accessLogin_status()) { 
       return(
           <div>
@@ -129,6 +112,7 @@ const Login: React.FC<AppProps> = (
           </div> 
         );
       }
+          //Display login User_Home_Page when valid login
       else {
         return(
             <div> 
@@ -203,14 +187,14 @@ function App () {
     //Tracks click status of user's login and logout status
   const [login_status, setLogin_status] = useState(false); 
     //Tracks how many times, if ever, the user has clicked the login button
-  let trackLoginClicks = false; 
+  const [trackLoginClicks, setTrackLoginClicks] = useState(false); 
 
     //Mutator Functions
   function changeUsername_entry(value: string): void { setUsername_entry(value)};
   function changePassword_entry(value: string): void { setPassword_entry(value)};
   function change_to_LoggedIn(): void { setLogin_status(true)};
   function change_to_LoggedOut(): void { setLogin_status(false)};
-  function change_trackClicks(): void { trackLoginClicks = true}
+  function change_trackClicks(): void { setTrackLoginClicks(true)}
 
     //Accessor Function
   function retLogin_entry():string { return username_entry }
@@ -265,7 +249,7 @@ function App () {
 
               /> } />
           <Route path="/userInfo" element={<UserInfo />} />
-          
+          <Route path="/pages/User_Home_page" element={<User_Home_Page />} />
           {/* Other routes go here */}
         </Routes>
       </div>

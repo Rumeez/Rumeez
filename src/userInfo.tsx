@@ -1,6 +1,8 @@
 import React, { useState, ChangeEvent } from 'react';
 import { Link } from 'react-router-dom';
 
+
+
 function UserInfo() {
   const [name, setName] = useState('');
   const [bio, setBio] = useState('');
