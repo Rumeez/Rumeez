@@ -1,3 +1,4 @@
+
 //TODO List:
 //1) Create a new file for every link to a new page 
 //   and title it after that page. 
@@ -10,8 +11,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import UserInfo from './userInfo'; // Adjust the import here
 import { handleButtonClick } from './buttonLogic';
 import InputField from './InputField'; // Correct the path if needed
-import { User_Home_Page } from './pages/User_Home_page';
-
+import CreateAccount from './createAccount';
 
       //In Progress
   //TODO: {Write Login Render Function for two scenarios: 
@@ -137,27 +137,27 @@ return(
 }
 
 const Home: React.FC<AppProps> = (
-  {setUsername_entry, setPassword_entry, set_to_LoggedIn, set_to_LoggedOut, set_trackClicks,
-    accessUsername_entry, accessPassword_entry, accessLogin_status, accessTrack_clicks}
-   ) => { //, accessLogin_status) {
+  {setUsername_entry, setPassword_entry, set_to_LoggedIn, set_to_LoggedOut,
+    accessUsername_entry, accessPassword_entry, accessLogin_status, login_click}
+) => {
 
   return (
     <div>
-     <h1>Rumeez</h1>
-     <h2>Find your perfect roommate.</h2>
-          <Login 
-            setUsername_entry={setUsername_entry} 
-            setPassword_entry={setPassword_entry} 
-            set_to_LoggedIn={set_to_LoggedIn}
-            set_to_LoggedOut={set_to_LoggedOut}
-            set_trackClicks={set_trackClicks}
-            accessUsername_entry={accessUsername_entry}
-            accessPassword_entry={accessPassword_entry}
-            accessLogin_status={accessLogin_status}
-            accessTrack_clicks={accessTrack_clicks}
-          />
-        <> </>
-          <Createacc />
+      <h1>Rumeez</h1>
+      <h2>Find your perfect roommate.</h2>
+      <Login 
+        setUsername_entry={setUsername_entry} 
+        setPassword_entry={setPassword_entry} 
+        set_to_LoggedIn={set_to_LoggedIn}
+        set_to_LoggedOut={set_to_LoggedOut}
+        accessUsername_entry={accessUsername_entry}
+        accessPassword_entry={accessPassword_entry}
+        accessLogin_status={accessLogin_status}
+        login_click={login_click}
+      />
+      <Link to="/createAccount"> {/* Add this line */}
+        <button className="create_acc"> Create Account </button>
+      </Link>
     </div>
   );
 }
@@ -169,14 +169,12 @@ interface AppProps {
   setPassword_entry: (value: string) => void
   set_to_LoggedIn: () => void
   set_to_LoggedOut: () => void
-  set_trackClicks: () => void 
-  //login_click: () => JSX.Element
+  login_click: () => JSX.Element
 
       //Accessor Function Types
   accessUsername_entry: () => string
   accessPassword_entry: () => string
   accessLogin_status: () => boolean
-  accessTrack_clicks: () => boolean
 }
 
 function App () {
@@ -194,14 +192,12 @@ function App () {
   function changePassword_entry(value: string): void { setPassword_entry(value)};
   function change_to_LoggedIn(): void { setLogin_status(true)};
   function change_to_LoggedOut(): void { setLogin_status(false)};
-  function change_trackClicks(): void { setTrackLoginClicks(true)}
+  function change_trackClicks(): void {setTrackLoginClicks(true)}
 
     //Accessor Function
   function retLogin_entry():string { return username_entry }
   function retPassword_entry():string { return password_entry }
   function retLogin_status():boolean { return login_status }
-      //This function returns if login clicks has been clicked once or more times
-  function retTrack_clicks(): boolean {return trackLoginClicks}
 
   //Temporarily defined here:
   function handleLoginClick() {
@@ -223,7 +219,9 @@ function App () {
         //Branch 1
         change_to_LoggedIn(); 
 
-        //return( <p> Logged In :p </p>)
+        return(
+          <p> Logged In :p </p>
+        )
 
       
       //Branch 2
@@ -251,6 +249,26 @@ function App () {
           <Route path="/userInfo" element={<UserInfo />} />
           <Route path="/pages/User_Home_page" element={<User_Home_Page />} />
           {/* Other routes go here */}
+return (
+  <Router>
+    <div className="App">
+      {/* Use Routes to wrap your Route components */}
+      <Routes>
+        {/* Add the Route for the home page */}
+        <Route path="/" element={
+          <Home
+            setUsername_entry={changeUsername_entry}
+            setPassword_entry={changePassword_entry}
+            set_to_LoggedIn={change_to_LoggedIn}
+            set_to_LoggedOut={change_to_LoggedOut}
+            accessUsername_entry={retLogin_entry}
+            accessPassword_entry={retPassword_entry}
+            accessLogin_status={retLogin_status}
+            login_click={handleLoginClick}
+          />
+        } />
+       <Route path="/userInfo" element={<UserInfo />} />
+          <Route path="/createAccount" element={<CreateAccount />} />
         </Routes>
       </div>
     </Router>
@@ -258,16 +276,3 @@ function App () {
 }
 
 export default App;
-
-/* <Route path="/pages/User_Home_page" element={
-              <Login 
-              setUsername_entry={changeUsername_entry}  
-              setPassword_entry={changePassword_entry}
-              set_to_LoggedIn={change_to_LoggedIn}
-              set_to_LoggedOut={change_to_LoggedOut}
-              accessUsername_entry={retLogin_entry}
-              accessPassword_entry={retPassword_entry}
-              accessLogin_status={retLogin_status}
-              />} />
-              
-*/
