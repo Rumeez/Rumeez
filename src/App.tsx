@@ -58,6 +58,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import UserInfo from './userInfo'; // Adjust the import here
 import { handleButtonClick } from './buttonLogic';
 import InputField from './InputField'; // Correct the path if needed
+import { User_Home_Page } from './pages/User_Home_page';
 
 
       //In Progress
@@ -68,44 +69,65 @@ import InputField from './InputField'; // Correct the path if needed
   //         entered user credentials. 
 
 /* FIX Required: Figure Out How to define this outside of App Parent
-                  component
-  const handleLoginClick: React.FC<AppProps> = (
-    {set_to_LoggedIn, set_to_LoggedOut, accessUsername_entry, 
-     accessPassword_entry, accessLogin_status}
-    ) => {
+                  component*/
 
-      //Store vars from App states locally to reduce 
-        //computatutional time complexities
-      const Username_entry = accessUsername_entry();
-      const Password_entry = accessUsername_entry();
+//*/
 
-      //TODO: {Retrieve data from backend on user credentials entered via axios}
+/*function login_button_valid() {
+  return (
+    <Link to="/pages/User_Home_Page"> 
+          <button> </button>
+    </Link>
 
-      //1)If (user is found)
-        //update the Login_status
-        //render home page
-      //2)If (user is not found)
-        //Display error message: 
-        //"username or password incorrect"
-
-        //Branch 1
-        set_to_LoggedIn(); 
-
-        return(
-          <p> Logged In :p </p>
-        )
-
-      
-      //Branch 2
-
-
+    interface LoginClickProps {
+  onClick: () => void;
+  children: React.ReactNode; // Include children prop
 }
-*/
 
+  );
+}*/
+
+interface LoginValidProps {
+  event_login_click: () => void
+}
+
+const LoginIsValid: React.FC<LoginValidProps> = ({event_login_click}) => {
+  return (
+    <Link to="page/User_Home_page"> 
+        <button onClick={event_login_click}> Login</button>
+    </Link>
+  ); 
+};
+
+interface LoginInvalidProps {
+  event_login_click: () => void
+  set_trackClicks: () => void
+  accessTrack_clicks: () => boolean
+}
+
+
+const LoginIsInvalid: React.FC<LoginInvalidProps> = ({event_login_click, set_trackClicks, accessTrack_clicks}) => {
+  if(!accessTrack_clicks()) {
+    return (
+        <button onClick={event_login_click}> Login </button>
+      );
+  }
+  else {
+    return (
+      //Just Realized that I could have made an one entire component to capture and display all subcomponents 
+          //In the format I wanted. B/c I didn't the Error is going to be diplayed beneath the login button
+          //for when login credentials are invalid
+      <div>
+        <button onClick={event_login_click}> Login </button>
+        <p style={{color : 'red'}}> Username or password incorrect </p>
+      </div>
+    );
+  }
+};
 
 const Login: React.FC<AppProps> = (
-  {setUsername_entry, setPassword_entry, set_to_LoggedIn, set_to_LoggedOut,
-    accessUsername_entry, accessPassword_entry, accessLogin_status, login_click}
+  {setUsername_entry, setPassword_entry, set_to_LoggedIn, set_to_LoggedOut, set_trackClicks,
+    accessUsername_entry, accessPassword_entry, accessLogin_status, accessTrack_clicks}
    ) => {
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -123,18 +145,51 @@ const Login: React.FC<AppProps> = (
     }
   };
 
-  /* Fix Required:
-        //Add the following below InputFields to create
-        //a login button that takes in user input, and 
-        //logs into the page. Need a way to pass handleC
-  <button> onClick={login_click} Log in<button/> */
-  return(
-    <div>
-      <InputField label="Username: " name="username" value={accessUsername_entry()} onChange={handleInputChange} placeholder="Enter your username" />
-      <InputField label="Password: " name="password" value={accessPassword_entry()} onChange={handleInputChange} placeholder="Enter your password" />
-      <button onClick={login_click}>Log in</button>
-    </div>
-  ); 
+  const handleLoginClick = () => {
+    const login_validity = isLogin_Valid(); // Perform actual login validation logic
+
+    if(!accessTrack_clicks()) {
+      set_trackClicks();
+    }
+
+    if(login_validity) {
+        set_to_LoggedIn(); 
+    }
+    // Other login-related actions based on validation
+  };
+
+  const isLogin_Valid = (): boolean => {
+    const username = accessUsername_entry();
+    const password = accessPassword_entry();
+    // Validate the credentials and return true/false
+    return true; // Placeholder, replace with actual validation logic
+  };
+
+      //Return for Login Button
+  if(accessLogin_status()) { 
+      return(
+          <div>
+              <InputField label="Username: " name="username" value={accessUsername_entry()} onChange={handleInputChange} placeholder="Enter your username" />
+              <InputField label="Password: " name="password" value={accessPassword_entry()} onChange={handleInputChange} placeholder="Enter your password" />
+              <LoginIsValid 
+                        event_login_click={handleLoginClick} 
+              /> 
+          </div> 
+        );
+      }
+      else {
+        return(
+            <div> 
+              <InputField label="Username: " name="username" value={accessUsername_entry()} onChange={handleInputChange} placeholder="Enter your username" />
+              <InputField label="Password: " name="password" value={accessPassword_entry()} onChange={handleInputChange} placeholder="Enter your password" />
+              <LoginIsInvalid 
+                            event_login_click={handleLoginClick} 
+                            set_trackClicks={set_trackClicks}
+                            accessTrack_clicks={accessTrack_clicks}
+              /> 
+            </div>
+        );
+      }    
 }
 
 function Createacc() {
@@ -146,8 +201,8 @@ return(
 }
 
 const Home: React.FC<AppProps> = (
-  {setUsername_entry, setPassword_entry, set_to_LoggedIn, set_to_LoggedOut,
-    accessUsername_entry, accessPassword_entry, accessLogin_status, login_click}
+  {setUsername_entry, setPassword_entry, set_to_LoggedIn, set_to_LoggedOut, set_trackClicks,
+    accessUsername_entry, accessPassword_entry, accessLogin_status, accessTrack_clicks}
    ) => { //, accessLogin_status) {
 
   return (
@@ -159,10 +214,11 @@ const Home: React.FC<AppProps> = (
             setPassword_entry={setPassword_entry} 
             set_to_LoggedIn={set_to_LoggedIn}
             set_to_LoggedOut={set_to_LoggedOut}
+            set_trackClicks={set_trackClicks}
             accessUsername_entry={accessUsername_entry}
             accessPassword_entry={accessPassword_entry}
             accessLogin_status={accessLogin_status}
-            login_click={login_click}
+            accessTrack_clicks={accessTrack_clicks}
           />
         <> </>
           <Createacc />
@@ -177,12 +233,14 @@ interface AppProps {
   setPassword_entry: (value: string) => void
   set_to_LoggedIn: () => void
   set_to_LoggedOut: () => void
-  login_click: () => JSX.Element
+  set_trackClicks: () => void 
+  //login_click: () => JSX.Element
 
       //Accessor Function Types
   accessUsername_entry: () => string
   accessPassword_entry: () => string
   accessLogin_status: () => boolean
+  accessTrack_clicks: () => boolean
 }
 
 function App () {
@@ -192,17 +250,22 @@ function App () {
   const [password_entry, setPassword_entry] = useState('');
     //Tracks click status of user's login and logout status
   const [login_status, setLogin_status] = useState(false); 
+    //Tracks how many times, if ever, the user has clicked the login button
+  let trackLoginClicks = false; 
 
     //Mutator Functions
   function changeUsername_entry(value: string): void { setUsername_entry(value)};
   function changePassword_entry(value: string): void { setPassword_entry(value)};
   function change_to_LoggedIn(): void { setLogin_status(true)};
   function change_to_LoggedOut(): void { setLogin_status(false)};
+  function change_trackClicks(): void { trackLoginClicks = true}
 
     //Accessor Function
   function retLogin_entry():string { return username_entry }
   function retPassword_entry():string { return password_entry }
   function retLogin_status():boolean { return login_status }
+      //This function returns if login clicks has been clicked once or more times
+  function retTrack_clicks(): boolean {return trackLoginClicks}
 
   //Temporarily defined here:
   function handleLoginClick() {
@@ -224,9 +287,7 @@ function App () {
         //Branch 1
         change_to_LoggedIn(); 
 
-        return(
-          <p> Logged In :p </p>
-        )
+        //return( <p> Logged In :p </p>)
 
       
       //Branch 2
@@ -244,12 +305,15 @@ function App () {
               setPassword_entry={changePassword_entry}
               set_to_LoggedIn={change_to_LoggedIn}
               set_to_LoggedOut={change_to_LoggedOut}
+              set_trackClicks={change_trackClicks}
               accessUsername_entry={retLogin_entry}
               accessPassword_entry={retPassword_entry}
               accessLogin_status={retLogin_status}
-              login_click={handleLoginClick}
+              accessTrack_clicks={retTrack_clicks}
+
               /> } />
           <Route path="/userInfo" element={<UserInfo />} />
+          
           {/* Other routes go here */}
         </Routes>
       </div>
@@ -258,3 +322,16 @@ function App () {
 }
 
 export default App;
+
+/* <Route path="/pages/User_Home_page" element={
+              <Login 
+              setUsername_entry={changeUsername_entry}  
+              setPassword_entry={changePassword_entry}
+              set_to_LoggedIn={change_to_LoggedIn}
+              set_to_LoggedOut={change_to_LoggedOut}
+              accessUsername_entry={retLogin_entry}
+              accessPassword_entry={retPassword_entry}
+              accessLogin_status={retLogin_status}
+              />} />
+              
+*/
