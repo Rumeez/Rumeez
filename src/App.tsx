@@ -12,6 +12,7 @@ import UserInfo from './userInfo'; // Adjust the import here
 import { handleButtonClick } from './buttonLogic';
 import InputField from './InputField'; // Correct the path if needed
 import CreateAccount from './createAccount';
+import User_Home_Page from './pages/User_Home_page';
 
       //In Progress
   //TODO: {Write Login Render Function for two scenarios: 
@@ -137,8 +138,8 @@ return(
 }
 
 const Home: React.FC<AppProps> = (
-  {setUsername_entry, setPassword_entry, set_to_LoggedIn, set_to_LoggedOut,
-    accessUsername_entry, accessPassword_entry, accessLogin_status, login_click}
+  {setUsername_entry, setPassword_entry, set_to_LoggedIn, set_to_LoggedOut, set_trackClicks,
+    accessUsername_entry, accessPassword_entry, accessLogin_status, accessTrack_clicks}
 ) => {
 
   return (
@@ -146,14 +147,15 @@ const Home: React.FC<AppProps> = (
       <h1>Rumeez</h1>
       <h2>Find your perfect roommate.</h2>
       <Login 
-        setUsername_entry={setUsername_entry} 
-        setPassword_entry={setPassword_entry} 
-        set_to_LoggedIn={set_to_LoggedIn}
-        set_to_LoggedOut={set_to_LoggedOut}
-        accessUsername_entry={accessUsername_entry}
-        accessPassword_entry={accessPassword_entry}
-        accessLogin_status={accessLogin_status}
-        login_click={login_click}
+       setUsername_entry={setUsername_entry}
+       setPassword_entry={setPassword_entry}
+       set_to_LoggedIn={set_to_LoggedIn}
+       set_to_LoggedOut={set_to_LoggedOut}
+       set_trackClicks={set_trackClicks}
+       accessUsername_entry={accessUsername_entry}
+       accessPassword_entry={accessPassword_entry}
+       accessLogin_status={accessLogin_status}
+       accessTrack_clicks={accessTrack_clicks}
       />
       <Link to="/createAccount"> {/* Add this line */}
         <button className="create_acc"> Create Account </button>
@@ -162,69 +164,83 @@ const Home: React.FC<AppProps> = (
   );
 }
 
-    //Defining App Props
+   //Defining App Props
 interface AppProps {
-    //Mutator Function Types
-  setUsername_entry: (value: string) => void
-  setPassword_entry: (value: string) => void
-  set_to_LoggedIn: () => void
-  set_to_LoggedOut: () => void
-  login_click: () => JSX.Element
+  //Mutator Function Types
+setUsername_entry: (value: string) => void
+setPassword_entry: (value: string) => void
+set_to_LoggedIn: () => void
+set_to_LoggedOut: () => void
+set_trackClicks: () => void
+//login_click: () => JSX.Element
 
-      //Accessor Function Types
-  accessUsername_entry: () => string
-  accessPassword_entry: () => string
-  accessLogin_status: () => boolean
+
+    //Accessor Function Types
+accessUsername_entry: () => string
+accessPassword_entry: () => string
+accessLogin_status: () => boolean
+accessTrack_clicks: () => boolean
 }
 
+
 function App () {
-    //Stores user's username associated with account
-  const [username_entry, setUsername_entry] = useState('');
-    //Stores user's password associated with account
-  const [password_entry, setPassword_entry] = useState('');
-    //Tracks click status of user's login and logout status
-  const [login_status, setLogin_status] = useState(false); 
-    //Tracks how many times, if ever, the user has clicked the login button
-  const [trackLoginClicks, setTrackLoginClicks] = useState(false); 
+  //Stores user's username associated with account
+const [username_entry, setUsername_entry] = useState('');
+  //Stores user's password associated with account
+const [password_entry, setPassword_entry] = useState('');
+  //Tracks click status of user's login and logout status
+const [login_status, setLogin_status] = useState(false);
+  //Tracks how many times, if ever, the user has clicked the login button
+const [trackLoginClicks, setTrackLoginClicks] = useState(false);
 
-    //Mutator Functions
-  function changeUsername_entry(value: string): void { setUsername_entry(value)};
-  function changePassword_entry(value: string): void { setPassword_entry(value)};
-  function change_to_LoggedIn(): void { setLogin_status(true)};
-  function change_to_LoggedOut(): void { setLogin_status(false)};
-  function change_trackClicks(): void {setTrackLoginClicks(true)}
 
-    //Accessor Function
-  function retLogin_entry():string { return username_entry }
-  function retPassword_entry():string { return password_entry }
-  function retLogin_status():boolean { return login_status }
+  //Mutator Functions
+function changeUsername_entry(value: string): void { setUsername_entry(value)};
+function changePassword_entry(value: string): void { setPassword_entry(value)};
+function change_to_LoggedIn(): void { setLogin_status(true)};
+function change_to_LoggedOut(): void { setLogin_status(false)};
+function change_trackClicks(): void {setTrackLoginClicks(true)}
 
-  //Temporarily defined here:
-  function handleLoginClick() {
 
-      //Store vars from App states locally to reduce 
-        //computatutional time complexities
-      const Username_entry = retLogin_entry();
-      const Password_entry = retPassword_entry();
+  //Accessor Function
+function retLogin_entry():string { return username_entry }
+function retPassword_entry():string { return password_entry }
+function retLogin_status():boolean { return login_status }
+    //This function returns if login clicks has been clicked once or more times
+function retTrack_clicks(): boolean {return trackLoginClicks}
 
-      //TODO: {Retrieve data from backend on user credentials entered via axios}
 
-      //1)If (user is found)
-        //update the Login_status
-        //render home page
-      //2)If (user is not found)
-        //Display error message: 
-        //"username or password incorrect"
+//Temporarily defined here:
+function handleLoginClick() {
 
-        //Branch 1
-        change_to_LoggedIn(); 
 
-        return(
-          <p> Logged In :p </p>
-        )
+    //Store vars from App states locally to reduce
+      //computatutional time complexities
+    const Username_entry = retLogin_entry();
+    const Password_entry = retPassword_entry();
 
-      
-      //Branch 2
+
+    //TODO: {Retrieve data from backend on user credentials entered via axios}
+
+
+    //1)If (user is found)
+      //update the Login_status
+      //render home page
+    //2)If (user is not found)
+      //Display error message:
+      //"username or password incorrect"
+
+
+      //Branch 1
+      change_to_LoggedIn();
+
+
+      //return( <p> Logged In :p </p>)
+
+
+   
+    //Branch 2
+
 
 }
 
@@ -244,32 +260,12 @@ function App () {
               accessPassword_entry={retPassword_entry}
               accessLogin_status={retLogin_status}
               accessTrack_clicks={retTrack_clicks}
-
               /> } />
           <Route path="/userInfo" element={<UserInfo />} />
           <Route path="/pages/User_Home_page" element={<User_Home_Page />} />
-          {/* Other routes go here */}
-return (
-  <Router>
-    <div className="App">
-      {/* Use Routes to wrap your Route components */}
-      <Routes>
-        {/* Add the Route for the home page */}
-        <Route path="/" element={
-          <Home
-            setUsername_entry={changeUsername_entry}
-            setPassword_entry={changePassword_entry}
-            set_to_LoggedIn={change_to_LoggedIn}
-            set_to_LoggedOut={change_to_LoggedOut}
-            accessUsername_entry={retLogin_entry}
-            accessPassword_entry={retPassword_entry}
-            accessLogin_status={retLogin_status}
-            login_click={handleLoginClick}
-          />
-        } />
-       <Route path="/userInfo" element={<UserInfo />} />
           <Route path="/createAccount" element={<CreateAccount />} />
-        </Routes>
+          {/* Other routes go here */}
+          </Routes>
       </div>
     </Router>
   );

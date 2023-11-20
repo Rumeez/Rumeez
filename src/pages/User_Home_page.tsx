@@ -42,7 +42,7 @@ const User_Info_Button: React.FC<User_data_props> = ({user_data, label}) => {
     );
 }
 
-export function User_Home_Page() {
+export default function User_Home_Page() {
 
   //Prototype to fill params until can figure out 
       // how to fill in the params with backend data
@@ -72,11 +72,3 @@ export function User_Home_Page() {
     </div>
   );
 }
-
-/*
-<Link to="/userInfo">
-    <button onClick={onClick}>
-      {children}
-    </button>
-  </Link>
-*/ 
