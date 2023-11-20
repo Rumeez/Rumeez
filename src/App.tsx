@@ -133,7 +133,7 @@ const Login: React.FC<AppProps> = (
 
 function Createacc() {
 return( 
-  <Link to="/userInfo">
+  <Link to="/createAccount">
       <button className="create_acc"> Create Account </button>
   </Link>
 );
