@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom'
 
 interface User_Info {
       //Number of roommates
@@ -42,7 +43,19 @@ const User_Info_Button: React.FC<User_data_props> = ({user_data, label}) => {
     );
 }
 
+function User_settings () {
+  return(
+    <Link to="pages/User_Settings_and_Info">
+            <button> 
+                Link to User Settings and Info 
+            </button>
+    </Link>
+  );
+}
+
+
 export default function User_Home_Page() {
+
 
   //Prototype to fill params until can figure out 
       // how to fill in the params with backend data
@@ -66,6 +79,11 @@ export default function User_Home_Page() {
       <User_Info_Button user_data={userInfo.temp} label="Room Temperature: " />
       <User_Info_Button user_data={userInfo.smoking} label="Smoke: " />
       <User_Info_Button user_data={userInfo.drinking} label="Drink: " />
+
+      <> </>
+
+      <User_settings />
+      
       {/*TODO: figure out how to make drop down for top three room choices*/}
 
       <p> Logged in :p! User Home Page</p>

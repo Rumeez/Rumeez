@@ -13,6 +13,7 @@ import { handleButtonClick } from './buttonLogic';
 import InputField from './InputField'; // Correct the path if needed
 import CreateAccount from './createAccount';
 import User_Home_Page from './pages/User_Home_page';
+import User_Settings_and_Info from './pages/User_Settings_and_Info';
 
       //In Progress
   //TODO: {Write Login Render Function for two scenarios: 
@@ -157,9 +158,7 @@ const Home: React.FC<AppProps> = (
        accessLogin_status={accessLogin_status}
        accessTrack_clicks={accessTrack_clicks}
       />
-      <Link to="/createAccount"> {/* Add this line */}
-        <button className="create_acc"> Create Account </button>
-      </Link>
+      <Createacc />
     </div>
   );
 }
@@ -264,6 +263,7 @@ return (
         <Route path="/userInfo" element={<UserInfo />} />
         <Route path="/pages/User_Home_page" element={<User_Home_Page />}  />
         <Route path="/createAccount" element={<CreateAccount />} />
+        <Route path="/pages/User_Settings_and_Info" element={ <User_Settings_and_Info />} />
           {/* Other routes go here */}
           </Routes>
       </div>
