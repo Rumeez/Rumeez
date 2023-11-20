@@ -1,5 +1,9 @@
 import React from 'react';
 import {Link} from 'react-router-dom'
+import {useNavigate } from 'react-router-dom';
+
+
+
 
 interface User_Info {
       //Number of roommates
@@ -13,21 +17,25 @@ interface User_Info {
     temp: string  
 }
 
+
 interface User_data_props {
   user_data: number | boolean | string
   label: string
 }
 const User_Info_Button: React.FC<User_data_props> = ({user_data, label}) => {
 
+
     //Converts User_Info data to string format
   function handleDataConversion(value: number | boolean | string) {
       if(typeof value !== 'string') {
               //returns parameter in string format
-          return JSON.stringify(value); 
+          return JSON.stringify(value);
       }
+
 
       return value;
   }
+
 
    // Intermediary function to handle the event and pass value to handleDataConversion
   const handleClick = () => {
@@ -36,28 +44,39 @@ const User_Info_Button: React.FC<User_data_props> = ({user_data, label}) => {
     console.log(convertedValue);
   };
 
+
     return(
-      <button onClick={handleClick}> 
+      <button onClick={handleClick}>
           {label}
       </button>
     );
 }
 
-function User_settings () {
+
+const User_settings: React.FC<UserHomePage_props> = ({setNavigation_path}) => {
+ 
+  function handleUserSettings(): void{
+    setNavigation_path('pages/User_Settings_and_Info');
+  }
   return(
-    <Link to="pages/User_Settings_and_Info">
-            <button> 
-                Link to User Settings and Info 
-            </button>
-    </Link>
+        <button onClick={handleUserSettings}>
+              Link to User Settings and Info
+        </button>
   );
 }
 
 
-export default function User_Home_Page() {
 
 
-  //Prototype to fill params until can figure out 
+interface UserHomePage_props {
+  setNavigation_path: (value: string) => void
+}
+
+
+export const User_Home_Page: React.FC<UserHomePage_props> = ({setNavigation_path}) => {
+
+
+  //Prototype to fill params until can figure out
       // how to fill in the params with backend data
       // retrieval
   const userInfo: User_Info = {
@@ -70,23 +89,52 @@ export default function User_Home_Page() {
     temp: "warm"
   };
 
+
   return (
     <div>
-      <User_Info_Button user_data={userInfo.roommates} label="Number of roommates: " />
-      <User_Info_Button user_data={userInfo.genderOfRoomate} label="Gender of Roommates: " />
-      <User_Info_Button user_data={userInfo.riseTime} label="RiseTime: " />
-      <User_Info_Button user_data={userInfo.sleepTime} label="BedTime: " />
-      <User_Info_Button user_data={userInfo.temp} label="Room Temperature: " />
-      <User_Info_Button user_data={userInfo.smoking} label="Smoke: " />
-      <User_Info_Button user_data={userInfo.drinking} label="Drink: " />
+        <div>
+          <User_Info_Button user_data={userInfo.roommates} label="Number of roommates: " />
+        </div>
 
-      <> </>
 
-      <User_settings />
-      
-      {/*TODO: figure out how to make drop down for top three room choices*/}
+        <div>
+          <User_Info_Button user_data={userInfo.genderOfRoomate} label="Gender of Roommates: " />
+        </div>
 
-      <p> Logged in :p! User Home Page</p>
-    </div>
+
+        <div>
+          <User_Info_Button user_data={userInfo.riseTime} label="RiseTime: " />
+        </div>
+
+
+        <div>
+          <User_Info_Button user_data={userInfo.sleepTime} label="BedTime: " />
+        </div>
+
+
+        <div>
+          <User_Info_Button user_data={userInfo.temp} label="Room Temperature: " />
+        </div>
+
+
+        <div>
+          <User_Info_Button user_data={userInfo.smoking} label="Smoke: " />
+        </div>
+
+
+        <div>
+          <User_Info_Button user_data={userInfo.drinking} label="Drink: " />
+          {/* Other JSX elements */}
+        </div>
+       
+        <User_settings setNavigation_path={setNavigation_path}/>
+        {/*TODO: Add drop-down for top three room choices*/}
+
+
+        <p> Logged in :p! User Home Page</p>
+  </div>
   );
 }
+
+
+export default User_Home_Page;

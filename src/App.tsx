@@ -183,6 +183,8 @@ accessTrack_clicks: () => boolean
 }
 
 
+
+
 function App () {
   //Stores user's username associated with account
 const [username_entry, setUsername_entry] = useState('');
@@ -192,6 +194,10 @@ const [password_entry, setPassword_entry] = useState('');
 const [login_status, setLogin_status] = useState(false);
   //Tracks how many times, if ever, the user has clicked the login button
 const [trackLoginClicks, setTrackLoginClicks] = useState(false);
+  //Track Current Page in Website
+let navigate = useNavigate();
+
+
 
 
   //Mutator Functions
@@ -200,6 +206,12 @@ function changePassword_entry(value: string): void { setPassword_entry(value)};
 function change_to_LoggedIn(): void { setLogin_status(true)};
 function change_to_LoggedOut(): void { setLogin_status(false)};
 function change_trackClicks(): void {setTrackLoginClicks(true)}
+function changeNavigation(value: string) : void {navigate(value)}
+function handleGoBack(): void {
+  changeNavigation('/');
+};
+
+
 
 
   //Accessor Function
@@ -210,8 +222,12 @@ function retLogin_status():boolean { return login_status }
 function retTrack_clicks(): boolean {return trackLoginClicks}
 
 
+
+
 //Temporarily defined here:
 function handleLoginClick() {
+
+
 
 
     //Store vars from App states locally to reduce
@@ -220,7 +236,11 @@ function handleLoginClick() {
     const Password_entry = retPassword_entry();
 
 
+
+
     //TODO: {Retrieve data from backend on user credentials entered via axios}
+
+
 
 
     //1)If (user is found)
@@ -231,15 +251,23 @@ function handleLoginClick() {
       //"username or password incorrect"
 
 
+
+
       //Branch 1
       change_to_LoggedIn();
+
+
 
 
       //return( <p> Logged In :p </p>)
 
 
+
+
    
     //Branch 2
+
+
 
 
 }
@@ -250,22 +278,32 @@ return (
       {/* Use Routes to wrap your Route components */}
       <Routes>
         <Route path="/" element={
-            <Home 
-            setUsername_entry={changeUsername_entry}  
-            setPassword_entry={changePassword_entry}
-            set_to_LoggedIn={change_to_LoggedIn}
-            set_to_LoggedOut={change_to_LoggedOut}
-            set_trackClicks={change_trackClicks}
-            accessUsername_entry={retLogin_entry}
-            accessPassword_entry={retPassword_entry}
-            accessLogin_status={retLogin_status}
-            accessTrack_clicks={retTrack_clicks}
-            // login_click={handleLoginClick}
+            <Home
+              setUsername_entry={changeUsername_entry}  
+              setPassword_entry={changePassword_entry}
+              set_to_LoggedIn={change_to_LoggedIn}
+              set_to_LoggedOut={change_to_LoggedOut}
+              set_trackClicks={change_trackClicks}
+              accessUsername_entry={retLogin_entry}
+              accessPassword_entry={retPassword_entry}
+              accessLogin_status={retLogin_status}
+              accessTrack_clicks={retTrack_clicks}
             /> } />
         <Route path="/userInfo" element={<UserInfo />} />
-        {/* <Route path="/pages/User_Home_page" element={<User_Home_Page />}  /> */}
-        <Route path="/createAccount" element={<CreateAccount />} />
-        {/* <Route path="/pages/User_Settings_and_Info" element={ <User_Settings_and_Info />} /> */}
+        <Route path="/pages/User_Home_page" element={
+              <User_Home_Page
+                      setNavigation_path={changeNavigation}
+              />}  />
+        <Route path="/createAccount" element={
+              <CreateAccount
+                      //setNavigation_path={changeNavigation}
+                      //handleGoBack={handleGoBack}
+              />} />
+        <Route path="/pages/User_Settings_and_Info" element={
+            <User_Settings_and_Info
+                  handleGoBack={handleGoBack}
+        /> } />
+
         <Route path="/userPref" element={<UserPref />} />
         </Routes>
       </div>
