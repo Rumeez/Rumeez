@@ -1,4 +1,4 @@
-
+// App.tsx
 //TODO List:
 //1) Create a new file for every link to a new page 
 //   and title it after that page. 
@@ -13,7 +13,8 @@ import { handleButtonClick } from './buttonLogic';
 import InputField from './InputField'; // Correct the path if needed
 import CreateAccount from './createAccount';
 import User_Home_Page from './pages/User_Home_page';
-import User_Settings_and_Info from './pages/User_Settings_and_Info';
+// import User_Settings_and_Info from './pages/User_Settings_and_Info';
+import UserPref from './userPref';
 
       //In Progress
   //TODO: {Write Login Render Function for two scenarios: 
@@ -146,7 +147,7 @@ const Home: React.FC<AppProps> = (
   return (
     <div>
       <h1>Rumeez</h1>
-      <h2>Find your perfect roommate.</h2>
+      <h2>Find the perfect roommate.</h2>
       <Login 
        setUsername_entry={setUsername_entry}
        setPassword_entry={setPassword_entry}
@@ -259,13 +260,14 @@ return (
             accessPassword_entry={retPassword_entry}
             accessLogin_status={retLogin_status}
             accessTrack_clicks={retTrack_clicks}
+            // login_click={handleLoginClick}
             /> } />
         <Route path="/userInfo" element={<UserInfo />} />
-        <Route path="/pages/User_Home_page" element={<User_Home_Page />}  />
+        {/* <Route path="/pages/User_Home_page" element={<User_Home_Page />}  /> */}
         <Route path="/createAccount" element={<CreateAccount />} />
-        <Route path="/pages/User_Settings_and_Info" element={ <User_Settings_and_Info />} />
-          {/* Other routes go here */}
-          </Routes>
+        {/* <Route path="/pages/User_Settings_and_Info" element={ <User_Settings_and_Info />} /> */}
+        <Route path="/userPref" element={<UserPref />} />
+        </Routes>
       </div>
     </Router>
   );
