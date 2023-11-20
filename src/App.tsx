@@ -244,25 +244,24 @@ function handleLoginClick() {
 
 }
 
-  return (
-    <Router>
-      <div className="App">
-        {/* Use Routes to wrap your Route components */}
-        <Routes>
-          <Route path="/" element={
-              <Home 
-              setUsername_entry={changeUsername_entry}  
-              setPassword_entry={changePassword_entry}
-              set_to_LoggedIn={change_to_LoggedIn}
-              set_to_LoggedOut={change_to_LoggedOut}
-              set_trackClicks={change_trackClicks}
-              accessUsername_entry={retLogin_entry}
-              accessPassword_entry={retPassword_entry}
-              accessLogin_status={retLogin_status}
-              accessTrack_clicks={retTrack_clicks}
-              /> } />
-          <Route path="/userInfo" element={<UserInfo />} />
-          <Route path="/pages/User_Home_page" element={<User_Home_Page />} />
+return (
+  <Router>
+    <div className="App">
+      {/* Use Routes to wrap your Route components */}
+      <Routes>
+        <Route path="/" element={
+            <Home 
+            setUsername_entry={changeUsername_entry}  
+            setPassword_entry={changePassword_entry}
+            set_to_LoggedIn={change_to_LoggedIn}
+            set_to_LoggedOut={change_to_LoggedOut}
+            set_trackClicks={change_trackClicks}
+            accessUsername_entry={retLogin_entry}
+            accessPassword_entry={retPassword_entry}
+            accessLogin_status={retLogin_status}
+            accessTrack_clicks={retTrack_clicks}
+            /> } />
+        <Route path="/userInfo" element={<UserInfo />} />
           <Route path="/createAccount" element={<CreateAccount />} />
           {/* Other routes go here */}
           </Routes>

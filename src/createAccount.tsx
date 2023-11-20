@@ -1,12 +1,10 @@
-// CreateAccount.tsx
+// createAccount.tsx
 
-// Import React and useState from the 'react' library
 import React, { useState, ChangeEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
+import InputField from './InputField';
+import { Link } from 'react-router-dom';
 
-// Import the InputField component from the './InputField' file
-import InputField from './InputField'; // Adjust the import path if needed
-
-// Define the interface for the props of the CreateAccount component
 interface CreateAccountProps {
   // Define any specific props for CreateAccount, if needed
 }
@@ -14,11 +12,11 @@ interface CreateAccountProps {
 // Define the CreateAccount component as a functional component
 const CreateAccount: React.FC<CreateAccountProps> = () => {
 
-  // Define two state variables, email and password, using the useState hook
+  // Define two state variables
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
-  // Define a function handleInputChange to handle input changes in the email and password fields
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     // Destructure the 'name' and 'value' from the event.target
     const { name, value } = event.target;
@@ -36,15 +34,22 @@ const CreateAccount: React.FC<CreateAccountProps> = () => {
     }
   };
 
-  // Define a function handleCreateAccount to handle the creation of the account
+
   const handleCreateAccount = () => {
     // Implement logic to handle creating an account (currently just logging)
     console.log('Creating account with email:', email, 'and password:', password);
+
+    navigate('/userInfo');
+  };
+
+  const handleGoBack = () => {
+    navigate('/');
   };
 
   // Return the JSX for the CreateAccount component
   return (
     <div>
+    <h1>Let's get started.</h1>
       {/* Render the InputField component for the email input */}
       <InputField
         label="Email:"
@@ -64,6 +69,7 @@ const CreateAccount: React.FC<CreateAccountProps> = () => {
       />
 
       {/* Render a button that triggers the handleCreateAccount function on click */}
+      <button onClick={handleGoBack}>Go Back</button>
       <button onClick={handleCreateAccount}>Create Account</button>
     </div>
   );
