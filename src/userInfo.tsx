@@ -1,3 +1,4 @@
+// userInfo.tsx
 import React, { useState, ChangeEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
@@ -19,6 +20,7 @@ function UserInfo() {
   // Event handler for dropdown changes
   const handleInputChange = (event: ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = event.target;
+
 
     // Update the state based on the dropdown that changed
     switch (name) {
@@ -47,6 +49,10 @@ function UserInfo() {
 
   const handleGoBack = () => {
     navigate('/createAccount');
+  };
+
+  const handleNext = () => {
+    navigate('/userPref');
   };
 
   return (
@@ -145,7 +151,7 @@ function UserInfo() {
       
       <button onClick={handleGoBack}>Go Back</button>
       {/* Add a link to navigate back to the home page */}
-      <button>Next</button>
+      <button onClick={handleNext}>Next</button>
     </div>
   );
 }
