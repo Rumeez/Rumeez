@@ -174,17 +174,22 @@ const UserInfo: React.FC<AppProps> = ({setFlagTo_false, setFlagTo_true, acceessF
       </select>
       {/* Your user information content goes here */}
       <div>
-          {!pg_flag && (
+      {(() => {
+        if (!pg_flag) {
+          return (
             <React.Fragment>
               <button onClick={handleGoBack}>Go Back</button>
               {/* Add a link to navigate back to the home page */}
               <button onClick={handleNext}>Next</button>
             </React.Fragment>
-          )}
-
-          {pg_flag && (
+          );
+        } 
+        if (pg_flag){
+          return (
             <button onClick={handleHomePage}> Home </button>
-          )}
+          );
+        }
+      })()}
         </div>
     </div>
   );
