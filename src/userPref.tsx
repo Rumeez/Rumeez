@@ -3,7 +3,11 @@ import React, { useState, ChangeEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
-function UserPref() {
+interface Props{
+  accessFlag: () => boolean
+}
+
+const UserPref: React.FC<Props> = ({accessFlag}) => {
     const [year, setYear] = useState('');
     const [gender, setGender] = useState('');
     const [smoke, setSmoke] = useState('');
@@ -16,6 +20,7 @@ function UserPref() {
     const [dorm2, setDorm2] = useState('');
     const [dorm3, setDorm3] = useState('');
     const navigate = useNavigate();
+    const flag = accessFlag()
 
     //event handler for dropdown changes
     const handleInputChange = (event: ChangeEvent<HTMLSelectElement>) => {
@@ -74,7 +79,15 @@ function UserPref() {
 
     return (
         <div>
-            <h1>Tell us what you want.</h1>
+
+            {(() => {
+                  if(!flag) {
+                    return(
+                      <h1>Tell us what you want.</h1>
+                    );
+                  }
+              }) 
+              ()}
 
              {/* Dropdown for Year */}
             <label htmlFor="year">Year:</label>
@@ -234,8 +247,18 @@ function UserPref() {
         <option value="universityapartments">University Apartments</option>
       </select>
 
-      <button onClick={(handleGoBack)}>Go Back</button>
-      <button>Next</button>
+      <div>
+      {(() => {
+        if (!flag) {
+          return (
+            <React.Fragment>
+              <button onClick={handleGoBack}>Go Back</button>
+              </React.Fragment>
+          );
+        } 
+      })()
+      }
+        </div>
 
         </div>
     );

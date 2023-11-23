@@ -236,7 +236,7 @@ return (
         <Route path="/pages/User_Home_page" element={<User_Home_Page setFlagTo_true={setFlagTo_true} />}  />
         <Route path="/createAccount" element={<CreateAccount />} />
         <Route path="/pages/User_Settings_and_Info" element={ <UserInfo setFlagTo_true={setFlagTo_true} setFlagTo_false={setFlagTo_false} acceessFlag={retFlag}/>} />
-        <Route path="/userPref" element={ <UserPref />} />
+        <Route path="/userPref" element={ <UserPref accessFlag={retFlag} />} />
           {/* Other routes go here */}
           </Routes>
       </div>

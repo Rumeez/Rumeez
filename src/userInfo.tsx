@@ -2,25 +2,12 @@
 import React, { useState, ChangeEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-
-
+import UserPref from './userPref';
 
 interface AppProps{
   setFlagTo_false: () => void
   setFlagTo_true: () => void
   acceessFlag: () => boolean
-}
-
-const Home: React.FC<AppProps> = ({setFlagTo_false}) => {
- 
-  //function handleUserSettings(): void { setNavigation_path('pages/User_Settings_and_Info') }
-  return(
-    <Link to="/pages/User_Home_page">
-        <button onClick={setFlagTo_false}>
-              Link to User Settings and Info
-        </button>
-    </Link>
-  );
 }
 
 const UserInfo: React.FC<AppProps> = ({setFlagTo_false, setFlagTo_true, acceessFlag}) => {
@@ -79,10 +66,15 @@ const UserInfo: React.FC<AppProps> = ({setFlagTo_false, setFlagTo_true, acceessF
     setFlagTo_false();
     navigate('/pages/User_Home_page');
   }
+
   return (
     <div>
             
-      {pg_flag ? <h1>User Settings</h1> :<h1>Tell us about yourself.</h1>}
+      {pg_flag ?
+            <div> 
+              <h1>User Settings</h1>
+              <h3> User Info </h3>
+            </div> :  <h1>Tell us about yourself.</h1>}
 
       {/* Text input for Name */}
       <label htmlFor="name">Name:</label>
@@ -173,20 +165,32 @@ const UserInfo: React.FC<AppProps> = ({setFlagTo_false, setFlagTo_true, acceessF
         <option value="3">3 am</option>
       </select>
       {/* Your user information content goes here */}
+
       <div>
       {(() => {
         if (!pg_flag) {
           return (
             <React.Fragment>
               <button onClick={handleGoBack}>Go Back</button>
-              {/* Add a link to navigate back to the home page */}
               <button onClick={handleNext}>Next</button>
             </React.Fragment>
           );
         } 
         if (pg_flag){
           return (
-            <button onClick={handleHomePage}> Home </button>
+            //<> </>
+            <div>
+                <h3> User Preferences </h3>
+
+                <div>
+                  <UserPref accessFlag={acceessFlag} />
+                </div>
+                
+                <div>
+                    <button onClick={handleHomePage}> Home </button>
+                </div>
+
+           </div>
           );
         }
       })()}
