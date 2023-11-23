@@ -31,7 +31,7 @@ function UserPref() {
     //  };
 
     //update state based on dropdown that changed
-    switch(name){
+    switch(name) {
         case 'year':
             setYear(value);
             break;

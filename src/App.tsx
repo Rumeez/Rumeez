@@ -166,21 +166,21 @@ const Home: React.FC<AppProps> = (
 
    //Defining App Props
 interface AppProps {
-  //Mutator Function Types
-setUsername_entry: (value: string) => void
-setPassword_entry: (value: string) => void
-set_to_LoggedIn: () => void
-set_to_LoggedOut: () => void
-set_trackClicks: () => void
-//login_click: () => JSX.Element
+      //Mutator Function Types
+    setUsername_entry: (value: string) => void
+    setPassword_entry: (value: string) => void
+    set_to_LoggedIn: () => void
+    set_to_LoggedOut: () => void
+    set_trackClicks: () => void
+    //login_click: () => JSX.Element
 
 
-    //Accessor Function Types
-accessUsername_entry: () => string
-accessPassword_entry: () => string
-accessLogin_status: () => boolean
-accessTrack_clicks: () => boolean
-}
+        //Accessor Function Types
+    accessUsername_entry: () => string
+    accessPassword_entry: () => string
+    accessLogin_status: () => boolean
+    accessTrack_clicks: () => boolean
+  }
 
 
 
@@ -194,8 +194,8 @@ const [password_entry, setPassword_entry] = useState('');
 const [login_status, setLogin_status] = useState(false);
   //Tracks how many times, if ever, the user has clicked the login button
 const [trackLoginClicks, setTrackLoginClicks] = useState(false);
-
-
+   // tracks page it's on
+const [flag, setFlag] = useState(false);
 
   //Mutator Functions
 function changeUsername_entry(value: string): void { setUsername_entry(value)};
@@ -203,6 +203,8 @@ function changePassword_entry(value: string): void { setPassword_entry(value)};
 function change_to_LoggedIn(): void { setLogin_status(true)};
 function change_to_LoggedOut(): void { setLogin_status(false)};
 function change_trackClicks(): void {setTrackLoginClicks(true)}
+function setFlagTo_true(): void {setFlag(true)}
+function setFlagTo_false(): void {setFlag(false)}
 
   //Accessor Function
 function retLogin_entry():string { return username_entry }
@@ -210,57 +212,8 @@ function retPassword_entry():string { return password_entry }
 function retLogin_status():boolean { return login_status }
     //This function returns if login clicks has been clicked once or more times
 function retTrack_clicks(): boolean {return trackLoginClicks}
+function retFlag(): boolean {return flag}
 
-
-
-
-//Temporarily defined here:
-function handleLoginClick() {
-
-
-
-
-    //Store vars from App states locally to reduce
-      //computatutional time complexities
-    const Username_entry = retLogin_entry();
-    const Password_entry = retPassword_entry();
-
-
-
-
-    //TODO: {Retrieve data from backend on user credentials entered via axios}
-
-
-
-
-    //1)If (user is found)
-      //update the Login_status
-      //render home page
-    //2)If (user is not found)
-      //Display error message:
-      //"username or password incorrect"
-
-
-
-
-      //Branch 1
-      change_to_LoggedIn();
-
-
-
-
-      //return( <p> Logged In :p </p>)
-
-
-
-
-   
-    //Branch 2
-
-
-
-
-}
 
 return (
   <Router>
@@ -279,10 +232,10 @@ return (
             accessLogin_status={retLogin_status}
             accessTrack_clicks={retTrack_clicks}
             /> } />
-        <Route path="/userInfo" element={<UserInfo />} />
-        <Route path="/pages/User_Home_page" element={<User_Home_Page />}  />
+        <Route path="/userInfo" element={<UserInfo setFlagTo_true={setFlagTo_true} setFlagTo_false={setFlagTo_false} acceessFlag={retFlag} />} />
+        <Route path="/pages/User_Home_page" element={<User_Home_Page setFlagTo_true={setFlagTo_true} />}  />
         <Route path="/createAccount" element={<CreateAccount />} />
-        <Route path="/pages/User_Settings_and_Info" element={ <User_Settings_and_Info />} />
+        <Route path="/pages/User_Settings_and_Info" element={ <UserInfo setFlagTo_true={setFlagTo_true} setFlagTo_false={setFlagTo_false} acceessFlag={retFlag}/>} />
         <Route path="/userPref" element={ <UserPref />} />
           {/* Other routes go here */}
           </Routes>

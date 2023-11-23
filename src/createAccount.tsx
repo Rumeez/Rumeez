@@ -8,7 +8,6 @@ import { Link } from 'react-router-dom';
 interface CreateAccountProps {
   // Define any specific props for CreateAccount, if needed
 }
-
 //Add new stuff
 
 // Define the CreateAccount component as a functional component
