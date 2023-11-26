@@ -84,24 +84,53 @@ const Login: React.FC<AppProps> = (
   };
 
   const handleLoginClick = () => {
-    const login_validity = isLogin_Valid(); // Perform actual login validation logic
-
-    if(!accessTrack_clicks()) {
-      set_trackClicks();
-    }
-
-    if(login_validity) {
-        set_to_LoggedIn(); 
-    }
-    // Other login-related actions based on validation
+    isLogin_Valid().then(loginResult => {
+      if (loginResult) {
+        set_to_LoggedIn();
+      } else {
+        set_trackClicks();
+      }
+    });
   };
 
-  const isLogin_Valid = (): boolean => {
-    const username = accessUsername_entry();
-    const password = accessPassword_entry();
-    // Validate the credentials and return true/false
-    return true; // Placeholder, replace with actual validation logic
-  };
+
+
+  const isLogin_Valid =  ():  Promise<boolean> => {
+    const username = accessUsername_entry().toString();
+    const password = accessPassword_entry().toString();
+    const apiUrl = 'http://localhost:8000/user/login';
+
+    
+    const requestBody = {
+      "email" : username,
+      "password" : password
+    };
+    console.log(requestBody);
+    console.log(username);
+    console.log(password);
+      return fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestBody),
+      })
+        .then(response => {
+          if (response.ok) {
+            return response.json().then(data => {
+              console.log('Login successful:', data);
+              return true; // or perform further actions on success
+            });
+          } else {
+            console.error('Login failed:', response.statusText);
+            return false; // or handle the error in a way that makes sense for your application
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          return false; // or handle the error in a way that makes sense for your application
+        });
+    };
 
   //Return for Login Button
       //Display login User_Home_Page when valid login
