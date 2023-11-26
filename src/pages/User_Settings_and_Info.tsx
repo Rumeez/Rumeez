@@ -2,9 +2,16 @@
 import React from 'react';
 import {Link} from 'react-router-dom'
 import {useNavigate} from 'react-router-dom';
+import { MenuButton } from '../utils';
 
 
-function User_Settings_and_Info() {
+
+interface SettingsAndInfoProps {
+    setSelected_page: (input: string) => void
+    accessSelected_option: () => string
+}
+
+const User_Settings_and_Info: React.FC<SettingsAndInfoProps> = ({setSelected_page, accessSelected_option}) => {
     
     const navigate = useNavigate();
     
@@ -22,6 +29,13 @@ function User_Settings_and_Info() {
 
     return (
         <div>
+
+            <div>
+                <MenuButton 
+                    setSelected_page={setSelected_page}
+                    accessSelected_option={accessSelected_option}
+                />
+            </div>
             <h1> User Settings Page</h1>
 
             <Back_toUser_Home_Page />

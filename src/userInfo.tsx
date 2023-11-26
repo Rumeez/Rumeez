@@ -8,9 +8,11 @@ interface AppProps{
   setFlagTo_false: () => void
   setFlagTo_true: () => void
   acceessFlag: () => boolean
+  setSelected_page: (input: string) => void
+  accessSelected_option: () => string
 }
 
-const UserInfo: React.FC<AppProps> = ({setFlagTo_false, setFlagTo_true, acceessFlag}) => {
+const UserInfo: React.FC<AppProps> = ({setFlagTo_false, setFlagTo_true, acceessFlag, setSelected_page, accessSelected_option}) => {
   const [name, setName] = useState('');
   const [bio, setBio] = useState('');
   const [year, setYear] = useState('');

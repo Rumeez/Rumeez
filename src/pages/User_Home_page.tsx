@@ -1,7 +1,8 @@
 //User_Home_page
-import React from 'react';
+import React, {useState} from 'react';
 import {Link} from 'react-router-dom'
 import {useNavigate} from 'react-router-dom';
+import { MenuButton } from '../utils';
 
 {/*TODO: create a function that: 
             --> (1) Retrieves a list(key as ID and list of usr data as value) 
@@ -115,15 +116,38 @@ const Like_usr_button: React.FC<LikeButtonProps> = ({setLike_statusTo_true, setL
 
 }
 
+interface SkipButtonProps {
+  setLike_statusTo_false: () => void
+  accessLike_status: () => boolean
+  navigate: (arg: string) => void
+}
+
+const Skip_usr_button: React.FC<SkipButtonProps> = ({setLike_statusTo_false, accessLike_status, navigate}) => { 
+
+    const handleSkipClick = () => {
+          //{TODO: display next user}
+    }
+
+    return(
+        <button> Skip </button>
+    );
+}
+
+
     {/*TODO: NEED TO FIX THIS, params aren't recognized by */}
 interface UsrHomePageProps { 
   setFlagTo_true: () => void
   setLike_statusTo_true: () => void
   setLike_statusTo_false: () => void
   accessLike_status: () => boolean
+  setSelected_page: (input: string) => void
+  accessSelected_option: () => string
 }
 
-const User_Home_Page: React.FC<UsrHomePageProps> = ({setFlagTo_true, setLike_statusTo_true, setLike_statusTo_false, accessLike_status}) => {
+const User_Home_Page: React.FC<UsrHomePageProps> = (
+  {setFlagTo_true, setLike_statusTo_true, setLike_statusTo_false, setSelected_page, accessSelected_option, accessLike_status}
+  
+  ) => {
   const navigate = useNavigate();
   
   //Prototype to fill params until can figure out
@@ -143,6 +167,13 @@ const User_Home_Page: React.FC<UsrHomePageProps> = ({setFlagTo_true, setLike_sta
 
   return (
     <div>
+        <div>
+                <MenuButton 
+                    setSelected_page={setSelected_page}
+                    accessSelected_option={accessSelected_option}
+                />
+        </div>
+
         <div>
           <User_Info_Button user_data={userInfo.roommates} label="Number of roommates: " />
         </div>
@@ -182,13 +213,23 @@ const User_Home_Page: React.FC<UsrHomePageProps> = ({setFlagTo_true, setLike_sta
 
         {/*TODO: Add drop-down for top three room choices*/}
 
-        <Like_usr_button 
-          setLike_statusTo_true={setLike_statusTo_true}
-          setLike_statusTo_false={setLike_statusTo_false}
-          accessLike_status={accessLike_status}
-          navigate={navigate}
-        />
+        <div> 
+            <Like_usr_button 
+              setLike_statusTo_true={setLike_statusTo_true}
+              setLike_statusTo_false={setLike_statusTo_false}
+              accessLike_status={accessLike_status}
+              navigate={navigate}
+            />
+        </div> 
                 
+        <div> 
+            <Skip_usr_button 
+                setLike_statusTo_false={setLike_statusTo_false}
+                accessLike_status={accessLike_status}
+                navigate={navigate}
+            /> 
+        </div> 
+
   </div>
   );
 }
