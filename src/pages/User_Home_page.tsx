@@ -3,6 +3,16 @@ import React from 'react';
 import {Link} from 'react-router-dom'
 import {useNavigate} from 'react-router-dom';
 
+{/*TODO: create a function that: 
+            --> (1) Retrieves a list(key as ID and list of usr data as value) 
+                    of usr IDs from the backend to display
+            --> (2) In the import, have a way to retrieve the current usr's 
+                    match status with the usr whose screen they're being
+                    displayed on
+            --> (3) Once imported, use this imported data to construct the 
+                    IsitAmatch() function 
+  */}
+
 interface User_Info {
       //Number of roommates
     roommates: number
@@ -44,11 +54,11 @@ const User_Info_Button: React.FC<User_data_props> = ({user_data, label}) => {
 }
 
 
-interface AppProps {
+interface UsrSettButtonProps {
   setFlagTo_true: () => void
 
 }
-const User_settings: React.FC<AppProps> = ({setFlagTo_true}) => {
+const User_settings: React.FC<UsrSettButtonProps> = ({setFlagTo_true}) => {
  
   //function handleUserSettings(): void { setNavigation_path('pages/User_Settings_and_Info') }
   return(
@@ -60,9 +70,62 @@ const User_settings: React.FC<AppProps> = ({setFlagTo_true}) => {
   );
 }
 
+interface LikeButtonProps {
+  setLike_statusTo_true: () => void
+  setLike_statusTo_false: () => void
+  accessLike_status: () => boolean
+  navigate: (arg: string) => void
+}
 
-const User_Home_Page: React.FC<AppProps> = ({setFlagTo_true}) => {
+const Like_usr_button: React.FC<LikeButtonProps> = ({setLike_statusTo_true, setLike_statusTo_false, accessLike_status, navigate}) => {
 
+    function matchedPage() : void { 
+    
+      navigate('/pages/usrMatch');
+    }
+
+    function isItAmatch() { 
+          {/*TODO: Need to figure out a way to retrieve the current usr displayed like status*/}
+              
+          //Fill if condition with matching like statuses b/w usrs 
+                  //later. Need usr data from back end
+              //if(false) {
+                //return false; 
+              //}
+          return true; 
+    }
+
+    function temp_dummy() {
+      return true
+    }
+
+    function handleLikeClick() { 
+        setLike_statusTo_true()
+
+        return( 
+          (() => {isItAmatch() ? matchedPage() : temp_dummy()})()
+
+          //{/* Returns the UsrMatch page or next usr profile in list to view*/}
+        );
+    }
+
+    return(
+        <button onClick={handleLikeClick}> Like </button>
+    );
+
+}
+
+    {/*TODO: NEED TO FIX THIS, params aren't recognized by */}
+interface UsrHomePageProps { 
+  setFlagTo_true: () => void
+  setLike_statusTo_true: () => void
+  setLike_statusTo_false: () => void
+  accessLike_status: () => boolean
+}
+
+const User_Home_Page: React.FC<UsrHomePageProps> = ({setFlagTo_true, setLike_statusTo_true, setLike_statusTo_false, accessLike_status}) => {
+  const navigate = useNavigate();
+  
   //Prototype to fill params until can figure out
       // how to fill in the params with backend data
       // retrieval
@@ -118,6 +181,13 @@ const User_Home_Page: React.FC<AppProps> = ({setFlagTo_true}) => {
         <User_settings setFlagTo_true={setFlagTo_true} />
 
         {/*TODO: Add drop-down for top three room choices*/}
+
+        <Like_usr_button 
+          setLike_statusTo_true={setLike_statusTo_true}
+          setLike_statusTo_false={setLike_statusTo_false}
+          accessLike_status={accessLike_status}
+          navigate={navigate}
+        />
                 
   </div>
   );

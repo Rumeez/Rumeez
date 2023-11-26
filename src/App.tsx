@@ -15,6 +15,7 @@ import CreateAccount from './createAccount';
 import User_Home_Page from './pages/User_Home_page';
 import User_Settings_and_Info from './pages/User_Settings_and_Info';
 import UserPref from './userPref';
+import UsrMatch from './pages/usrMatch'
 
       //In Progress
   //TODO: {Write Login Render Function for two scenarios: 
@@ -196,6 +197,9 @@ const [login_status, setLogin_status] = useState(false);
 const [trackLoginClicks, setTrackLoginClicks] = useState(false);
    // tracks page it's on
 const [flag, setFlag] = useState(false);
+const [like_status, setLike_status] = useState(false); 
+
+const temp_ID = "X123"
 
   //Mutator Functions
 function changeUsername_entry(value: string): void { setUsername_entry(value)};
@@ -205,6 +209,8 @@ function change_to_LoggedOut(): void { setLogin_status(false)};
 function change_trackClicks(): void {setTrackLoginClicks(true)}
 function setFlagTo_true(): void {setFlag(true)}
 function setFlagTo_false(): void {setFlag(false)}
+function setLike_statusTo_true(): void {setLike_status(true)}
+function setLike_statusTo_false(): void {setLike_status(false)}
 
   //Accessor Function
 function retLogin_entry():string { return username_entry }
@@ -213,6 +219,7 @@ function retLogin_status():boolean { return login_status }
     //This function returns if login clicks has been clicked once or more times
 function retTrack_clicks(): boolean {return trackLoginClicks}
 function retFlag(): boolean {return flag}
+function accessLike_status(): boolean {return like_status}
 
 
 return (
@@ -233,10 +240,17 @@ return (
             accessTrack_clicks={retTrack_clicks}
             /> } />
         <Route path="/userInfo" element={<UserInfo setFlagTo_true={setFlagTo_true} setFlagTo_false={setFlagTo_false} acceessFlag={retFlag} />} />
-        <Route path="/pages/User_Home_page" element={<User_Home_Page setFlagTo_true={setFlagTo_true} />}  />
+        <Route path="/pages/User_Home_page" element={
+                <User_Home_Page 
+                  setFlagTo_true={setFlagTo_true} 
+                  setLike_statusTo_true={setLike_statusTo_true}
+                  setLike_statusTo_false={setLike_statusTo_false}
+                  accessLike_status={accessLike_status}
+                />}  />
         <Route path="/createAccount" element={<CreateAccount />} />
         <Route path="/pages/User_Settings_and_Info" element={ <UserInfo setFlagTo_true={setFlagTo_true} setFlagTo_false={setFlagTo_false} acceessFlag={retFlag}/>} />
         <Route path="/userPref" element={ <UserPref accessFlag={retFlag} />} />
+        <Route path="/pages/usrMatch" element={ <UsrMatch usr_ID={temp_ID}/>} />
           {/* Other routes go here */}
           </Routes>
       </div>
