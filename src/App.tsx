@@ -6,7 +6,7 @@
 //3) Import app to every page to ensure that access to the 
 //   interface props is available in every file
 
-import React, {useState, ChangeEvent} from 'react';
+import React, {useEffect, useState, ChangeEvent} from 'react';
 //import {useFormStatus} from 'react-dom' 
 import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from 'react-router-dom';
 import UserInfo from './userInfo'; // Adjust the import here
@@ -19,6 +19,7 @@ import UserPref from './userPref';
 import UsrMatch from './pages/usrMatch'
 import Search from './pages/Search'
 import Chat from './pages/Chat'
+//npm import Axios from 'axios'
 
       //In Progress
   //TODO: {Write Login Render Function for two scenarios: 
@@ -79,7 +80,25 @@ const LoginIsInvalid: React.FC<LoginInvalidProps> = ({event_login_click, set_tra
   }
 };
 
-const Login: React.FC<HomeProps> = (
+interface LoginProps {
+  //Mutator Function Types
+setUsername_entry: (value: string) => void
+setPassword_entry: (value: string) => void
+set_to_LoggedIn: () => void
+set_to_LoggedOut: () => void
+set_trackClicks: () => void
+setPending_statusTo_true: () => void
+setPending_statusTo_false: () => void
+
+  //Accessor Function Types
+accessUsername_entry: () => string
+accessPassword_entry: () => string
+accessLogin_status: () => boolean
+accessTrack_clicks: () => boolean
+accessPending_status: () => boolean
+}
+
+const Login: React.FC<LoginProps> = (
   {setUsername_entry, setPassword_entry, set_to_LoggedIn, set_to_LoggedOut, set_trackClicks, 
     setPending_statusTo_true, setPending_statusTo_false, 
     accessUsername_entry, accessPassword_entry, accessLogin_status, accessTrack_clicks, 
@@ -101,17 +120,23 @@ const Login: React.FC<HomeProps> = (
     }
   };
 
+
   const handleLoginClick = () => {
+    
+    //setTimeout(() => {
+      // After some time (simulating an async process), set loggingIn back to false
+     // set_to_LoggedOut();
+      // Perform other login-related actions
+   // }, 2000); // Simulated 2
+
     const login_validity = isLogin_Valid(); // Perform actual login validation logic
 
     if(!accessTrack_clicks()) {
       set_trackClicks();
-
     }
 
     if(login_validity) {
       set_to_LoggedIn(); 
-      
     }
     // Other login-related actions based on validation
   };
@@ -178,13 +203,15 @@ interface HomeProps {
     accessLogin_status: () => boolean
     accessTrack_clicks: () => boolean
     accessPending_status: () => boolean
+    //data: string
 }
 
 const Home: React.FC<HomeProps> = (
   { setUsername_entry, setPassword_entry, set_to_LoggedIn, set_to_LoggedOut, set_trackClicks, 
     setPending_statusTo_true, setPending_statusTo_false, 
     accessUsername_entry, accessPassword_entry, accessLogin_status, accessTrack_clicks, 
-    accessPending_status
+    accessPending_status,
+    //data
   }
 ) => {
 
@@ -244,6 +271,19 @@ const [trackLoginClicks, setTrackLoginClicks] = useState(false);
 const [flag, setFlag] = useState(false);
 const [like_status, setLike_status] = useState(false); 
 const [selectedPage, setSelectedPage] = useState('Me');
+const [data, setData] = useState();
+
+
+  //Back End functions 
+//const getData=async() => {
+  //  const response = await Axios.get("http://localhost:8000/user")
+    //setData(response.data);
+//}
+
+//useEffect(() => {
+ // getData()
+//}, []);
+ 
 
 
 const temp_ID = "X123"
@@ -293,6 +333,7 @@ return (
                 setPending_statusTo_true={setPending_statusTo_true}
                 setPending_statusTo_false={setPending_statusTo_false}
                 accessPending_status={accessPending_status}
+                //data={data}
               /> } 
             />
         <Route path="/userInfo" element={
@@ -326,7 +367,7 @@ return (
                 <Search 
                     setSelected_page={setSelected_page}
                     accessSelected_option={accessSelected_option}
-                />} />
+                 />} />
         <Route path="/pages/Chat" element={
                 <Chat 
                     setSelected_page={setSelected_page}

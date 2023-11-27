@@ -251,8 +251,8 @@ const UserPref: React.FC<Props> = ({accessFlag}) => {
       {(() => {
         if (!flag) {
           return (
-            <React.Fragment>
-              <button onClick={handleGoBack}>Go Back</button>
+              <React.Fragment>
+                  <button onClick={handleGoBack}>Go Back</button>
               </React.Fragment>
           );
         } 
