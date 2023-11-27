@@ -48,12 +48,17 @@ const Chat: React.FC<ChatProps> = ({setSelected_page, accessSelected_option}) =>
 
     return(
         <div>
+
+                <div>
                 <MenuButton 
                     setSelected_page={setSelected_page}
                     accessSelected_option={accessSelected_option}
                 />
-
-                <MessageBox onSendMessage={sendMessage} />
+                </div>
+                        <h1> Message Users </h1>
+                <div> 
+                        <MessageBox onSendMessage={sendMessage} />
+                </div>
         </div>
     );
 }
