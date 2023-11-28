@@ -10,6 +10,23 @@ body {
   /*TODO: {background-image: url("c:\Users\Shawn\Downloads\bruin_bear_img.svg");}*/
 }
 
+.transition-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: 2px solid transparent;
+  border-radius: 5px;
+  background-color: #3498db;
+  color: #ffffff;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s, transform 0.3s;
+}
+
+.transition-button.transitioned {
+  background-color: #2980b9;
+  color: #ffffff;
+  transform: scale(1.1);
+}
+
 h1 {
   color:rgb(6, 112, 188); 
   font-size: 70px;

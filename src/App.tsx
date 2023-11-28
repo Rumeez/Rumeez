@@ -19,6 +19,8 @@ import UserPref from './userPref';
 import UsrMatch from './pages/usrMatch'
 import Search from './pages/Search'
 import Chat from './pages/Chat'
+import {TransitionButton} from './TransitionButton';// Import the TransitionButton component
+
 //npm import Axios from 'axios'
 
       //In Progress
@@ -45,11 +47,16 @@ const LoginIsValid: React.FC<LoginValidProps> = ({event_login_click, pending}) =
       </button>
     </Link>
   */
+
+    const handleLoginClick = () => {
+      // Logic for handling login click
+      event_login_click();
+    };
+
+   
   return (
     <Link to="pages/User_Home_page"> 
-        <button onClick={event_login_click}>
-              Login
-        </button>
+        <TransitionButton onClick={event_login_click} buttonText={pending() ? 'Logging In...' : 'Log In'} />
     </Link>
   ); 
 };
@@ -104,7 +111,7 @@ const Login: React.FC<LoginProps> = (
     accessUsername_entry, accessPassword_entry, accessLogin_status, accessTrack_clicks, 
     accessPending_status}
    ) => {
-
+    
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
   
@@ -120,16 +127,19 @@ const Login: React.FC<LoginProps> = (
     }
   };
 
+  
 
-  const handleLoginClick = () => {
-    isLogin_Valid().then(loginResult => {
-      if (loginResult) {
+    const handleLoginClick = () => {
+      
+      isLogin_Valid().then(loginResult => {
         set_to_LoggedIn();
-      } else {
-        set_trackClicks();
-      }
-    });
-  };
+        /*if (loginResult) {
+          set_to_LoggedIn();
+        } else {
+          set_trackClicks();
+        }*/
+      });
+    };
 
 
 
