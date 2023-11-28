@@ -3,6 +3,7 @@ import React, { useState, ChangeEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import UserPref from './userPref';
+import { MenuButton } from './utils';
 
 interface AppProps{
   setFlagTo_false: () => void
@@ -71,10 +72,20 @@ const UserInfo: React.FC<AppProps> = ({setFlagTo_false, setFlagTo_true, acceessF
 
   return (
     <div>
-            
+    
       {pg_flag ?
             <div> 
-              <h1>User Settings</h1>
+
+              <div> 
+                <MenuButton 
+                          setSelected_page={setSelected_page}
+                          accessSelected_option={accessSelected_option}
+                          setFlagTo_true={setFlagTo_true}
+                          setFlagTo_false={setFlagTo_false}
+                  />
+              </div>
+
+              <h1> User Settings </h1>
               <h3> User Info </h3>
             </div> :  <h1>Tell us about yourself.</h1>}
 
@@ -186,10 +197,6 @@ const UserInfo: React.FC<AppProps> = ({setFlagTo_false, setFlagTo_true, acceessF
 
                 <div>
                   <UserPref accessFlag={acceessFlag} />
-                </div>
-                
-                <div>
-                    <button onClick={handleHomePage}> Home </button>
                 </div>
 
            </div>

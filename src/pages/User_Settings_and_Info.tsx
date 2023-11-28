@@ -9,9 +9,11 @@ import { MenuButton } from '../utils';
 interface SettingsAndInfoProps {
     setSelected_page: (input: string) => void
     accessSelected_option: () => string
+    setFlagTo_true: () => void
+    setFlagTo_false: () => void
 }
 
-const User_Settings_and_Info: React.FC<SettingsAndInfoProps> = ({setSelected_page, accessSelected_option}) => {
+const User_Settings_and_Info: React.FC<SettingsAndInfoProps> = ({setSelected_page, accessSelected_option, setFlagTo_true, setFlagTo_false}) => {
     
     const navigate = useNavigate();
     
@@ -32,8 +34,10 @@ const User_Settings_and_Info: React.FC<SettingsAndInfoProps> = ({setSelected_pag
 
             <div>
                 <MenuButton 
-                    setSelected_page={setSelected_page}
-                    accessSelected_option={accessSelected_option}
+                        setSelected_page={setSelected_page}
+                        accessSelected_option={accessSelected_option}
+                        setFlagTo_true={setFlagTo_true}
+                        setFlagTo_false={setFlagTo_false}
                 />
             </div>
             <h1> User Settings Page</h1>

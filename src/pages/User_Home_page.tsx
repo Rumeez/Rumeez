@@ -137,6 +137,7 @@ const Skip_usr_button: React.FC<SkipButtonProps> = ({setLike_statusTo_false, acc
     {/*TODO: NEED TO FIX THIS, params aren't recognized by */}
 interface UsrHomePageProps { 
   setFlagTo_true: () => void
+  setFlagTo_false: () => void
   setLike_statusTo_true: () => void
   setLike_statusTo_false: () => void
   accessLike_status: () => boolean
@@ -145,7 +146,7 @@ interface UsrHomePageProps {
 }
 
 const User_Home_Page: React.FC<UsrHomePageProps> = (
-  {setFlagTo_true, setLike_statusTo_true, setLike_statusTo_false, setSelected_page, accessSelected_option, accessLike_status}
+  {setFlagTo_true, setFlagTo_false, setLike_statusTo_true, setLike_statusTo_false, setSelected_page, accessSelected_option, accessLike_status}
   
   ) => {
   const navigate = useNavigate();
@@ -171,6 +172,8 @@ const User_Home_Page: React.FC<UsrHomePageProps> = (
                 <MenuButton 
                     setSelected_page={setSelected_page}
                     accessSelected_option={accessSelected_option}
+                    setFlagTo_true={setFlagTo_true}
+                    setFlagTo_false={setFlagTo_false}
                 />
         </div>
 
@@ -208,9 +211,7 @@ const User_Home_Page: React.FC<UsrHomePageProps> = (
           <User_Info_Button user_data={userInfo.drinking} label="Drink: " />
           {/* Other JSX elements */}
         </div>
-
-        <User_settings setFlagTo_true={setFlagTo_true} />
-
+ 
         {/*TODO: Add drop-down for top three room choices*/}
 
         <div> 

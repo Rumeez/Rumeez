@@ -38,9 +38,11 @@ const MessageBox: React.FC<MessageBoxProps> = ({ onSendMessage }) => {
 interface ChatProps {
     setSelected_page: (input: string) => void
     accessSelected_option: () => string
+    setFlagTo_true: () => void
+    setFlagTo_false: () => void
 }
 
-const Chat: React.FC<ChatProps> = ({setSelected_page, accessSelected_option}) => {
+const Chat: React.FC<ChatProps> = ({setSelected_page, accessSelected_option, setFlagTo_true, setFlagTo_false}) => {
     
     const sendMessage = (message: string) => {
         console.log('Sending message:', message);
@@ -50,10 +52,12 @@ const Chat: React.FC<ChatProps> = ({setSelected_page, accessSelected_option}) =>
         <div>
 
                 <div>
-                <MenuButton 
-                    setSelected_page={setSelected_page}
-                    accessSelected_option={accessSelected_option}
-                />
+                    <MenuButton 
+                        setSelected_page={setSelected_page}
+                        accessSelected_option={accessSelected_option}
+                        setFlagTo_true={setFlagTo_true}
+                        setFlagTo_false={setFlagTo_false}
+                    />
                 </div>
                         <h1> Message Users </h1>
                 <div> 
